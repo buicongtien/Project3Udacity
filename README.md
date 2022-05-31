@@ -78,3 +78,16 @@ This App is lightweight, therefore deployed through an App Service are reasonabl
 Function App support microsverices as well as run background job by ServiceBus very good. 
 
 PostgreSQL database is very PostgreSQL database.
+
+Drawback of the existing architechture:
+   .Need tell request libary to stop waiting for response after a given amount  of time by passing a number to the "timeout" parameter
+   .Not set Timeout when call api so can cause your program to hang indefinitely. if  no "timeout" is specificed explicitly, requests do not time out.
+
+Advantages of the current architechture:
+   * How the Service bus Queue is used for decoupling the web app for sending mail:
+      . Create a Client from a Service Bus connection string.
+      . Create a Service Bus Message.
+      . Open a single-use connection, send the supplied messages, and close connection.
+   * How the Azure function is used for decoupling the web app for sending mail.
+      . Function is triggered by Service Bus message.
+      . Decode message body to get message and then use Sengrid to send mail.
